@@ -13,12 +13,15 @@ jobs:
       - name: Checkout Terraform repository
         uses: actions/checkout@v3
 
+      - name: Import Google Cloud SDK public key
+        run: sudo sh -c 'curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -'
+
       - name: Set up Google Cloud SDK
         run: |
           echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
           sudo apt-get install apt-transport-https ca-certificates gnupg
           sudo apt-get update && sudo apt-get install google-cloud-sdk
-          gcloud auth activate-service-account --key-file=${{ secrets.GOOGLE_CLOUD_CREDENTIALS }}
+          gcloud auth activate-service-account --key-file=${{ github.workspace }}/my-key.json
           gcloud config set project ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
 
       - name: Install Terraform
