@@ -37,7 +37,8 @@ jobs:
           terraform init
 
       - name: Plan Terraform changes
-        run:  terraform plan -out=tfplan -debug
+        run:  |
+          TF_LOG=DEBUG terraform plan -out=tfplan
 
 
       - name: Apply Terraform changes
