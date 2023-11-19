@@ -1,0 +1,40 @@
+name: Deploy Terraform to Google Cloud
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Terraform repository
+        uses: actions/checkout@v3
+
+      - name: Setup Google Cloud SDK
+        uses: GoogleCloudPlatform/cloud-sdk-action@v2
+        with:
+          credentials-file: ${{ secrets.GOOGLE_CLOUD_CREDENTIALS }}
+          disable-prompts: true
+          project-id: ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.2.18
+
+      - name: Initialize Terraform
+        run: |
+          terraform init
+
+      - name: Plan Terraform changes
+        run: terraform plan
+
+      - name: Apply Terraform changes
+        run: terraform apply -auto-approve
+
+      - name: Destroy Terraform configuration (if deploy was successful)
+        if: ${{ steps.deploy.conclusion == 'success' }}
+        run: terraform destroy -auto-approve
