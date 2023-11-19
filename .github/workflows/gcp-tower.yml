@@ -13,12 +13,13 @@ jobs:
       - name: Checkout Terraform repository
         uses: actions/checkout@v3
 
-      - name: Setup Google Cloud SDK
-        uses: GoogleCloudPlatform/cloud-sdk-action@v2
-        with:
-          credentials-file: ${{ secrets.GOOGLE_CLOUD_CREDENTIALS }}
-          disable-prompts: true
-          project-id: ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
+      - name: Set up Google Cloud SDK
+        run: |
+          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+          sudo apt-get install apt-transport-https ca-certificates gnupg
+          sudo apt-get update && sudo apt-get install google-cloud-sdk
+          gcloud auth activate-service-account --key-file=${{ secrets.GOOGLE_CLOUD_CREDENTIALS }}
+          gcloud config set project ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2
@@ -36,5 +37,5 @@ jobs:
         run: terraform apply -auto-approve
 
       - name: Destroy Terraform configuration (if deploy was successful)
-        if: ${{ steps.deploy.conclusion == 'success' }}
+        if: ${{ success() }}
         run: terraform destroy -auto-approve
