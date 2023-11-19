@@ -3,7 +3,7 @@ name: Deploy Terraform to Google Cloud
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
