@@ -2,7 +2,6 @@ terraform.lock.hcl
 *.terraform*
 terraform.tfstate
 terraform.tfstate.backup
-terraform.tfvars
 *.DS_Store*
 *terraform.tfvars*
 my-key.json
