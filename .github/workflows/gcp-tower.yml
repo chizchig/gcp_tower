@@ -12,6 +12,11 @@ jobs:
     steps:
       - name: Checkout Terraform repository
         uses: actions/checkout@v3
+    
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.15.5
 
       - name: Import Google Cloud SDK public key
         run: sudo sh -c 'curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -'
@@ -26,13 +31,7 @@ jobs:
           gcloud auth activate-service-account --key-file=${{ github.workspace }}/my-key.json
           gcloud config set project ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
 
-      - name: Install Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: v1.2.18
-          cli_config_credentials_hostname: app.terraform.io
-          terraform_wrapper: true
-        
+    
       - name: Initialize Terraform
         run: |
           terraform init
