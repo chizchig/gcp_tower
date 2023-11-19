@@ -38,7 +38,7 @@ jobs:
 
       - name: Plan Terraform changes
         run: |
-            terraform plan -var-file=terraform.tfvars -out=tfplan
+         terraform plan -out=tfplan
         
 
 
