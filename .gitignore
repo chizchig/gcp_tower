@@ -4,5 +4,5 @@ terraform.tfstate
 terraform.tfstate.backup
 terraform.tfvars
 *.DS_Store*
-terraform.tfvars
+*terraform.tfvars*
 my-key.json
