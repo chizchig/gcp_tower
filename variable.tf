@@ -1,4 +1,4 @@
-variable "project_id" {
+variable "GOOGLE_CLOUD_PROJECT_ID" {
   type      = string
   sensitive = true
 }

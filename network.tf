@@ -2,7 +2,7 @@ module "network_vpc" {
   source  = "terraform-google-modules/network/google//modules/vpc"
   version = "8.0.0"
 
-  project_id                                = var.project_id
+  project_id                                = var.GOOGLE_CLOUD_PROJECT_ID
   network_name                              = "mgcpnetwork"
   shared_vpc_host                           = false
   network_firewall_policy_enforcement_order = "BEFORE_CLASSIC_FIREWALL"
@@ -26,7 +26,7 @@ resource "google_compute_instance" "instances" {
   name         = each.key
   machine_type = "n1-standard-1"
   zone         = each.value.zone
-  project      = var.project_id
+  project      = var.GOOGLE_CLOUD_PROJECT_ID
 
   network_interface {
     network = module.network_vpc.network_self_link
