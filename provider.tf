@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-  project = var.GOOGLE_CLOUD_PROJECT_ID
+  project = var.google_cloud_project_id
   region  = "us-central1"
 
 }
