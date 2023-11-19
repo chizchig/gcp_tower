@@ -20,12 +20,10 @@ jobs:
         run: |
           echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
           sudo apt-get install apt-transport-https ca-certificates gnupg
-          sudo apt-get remove google-cloud-cli  # Remove conflicting package
-          sudo apt-get autoclean
-          sudo apt-get update
-          sudo apt-get install google-cloud-sdk
+          sudo apt-get update && sudo apt-get install google-cloud-sdk
           gcloud auth activate-service-account --key-file=${{ github.workspace }}/my-key.json
           gcloud config set project ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
+      
       
       
 
