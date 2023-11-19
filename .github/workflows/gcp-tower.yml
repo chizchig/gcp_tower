@@ -25,15 +25,13 @@ jobs:
           sudo apt-get install google-cloud-sdk
           gcloud auth activate-service-account --key-file=${{ github.workspace }}/my-key.json
           gcloud config set project ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
-      
-      
-      
-      
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.2.18
+          cli_config_credentials_hostname: app.terraform.io
+          terraform_wrapper: true
 
       - name: Initialize Terraform
         run: |
