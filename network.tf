@@ -17,6 +17,10 @@ resource "google_compute_subnetwork" "subnets" {
   ip_cidr_range = each.value.ip_cidr_range
   region        = each.value.region
   network       = module.network_vpc.network_name
+  depends_on = [
+    google_compute_instance.instances["instance-01"],
+    google_compute_instance.instances["instance-02"],
+  ]
 }
 
 
