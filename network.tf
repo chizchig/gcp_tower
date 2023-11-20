@@ -34,8 +34,8 @@ resource "google_compute_instance" "instances" {
 
   network_interface {
     network = module.network_vpc.network_self_link
-    # subnetwork = try(lookup(google_compute_subnetwork.subnets, each.value.subnetwork_name, null).self_link, null)
-    subnetwork = each.value.subnetwork_name
+    subnetwork = try(lookup(google_compute_subnetwork.subnets, each.value.subnetwork_name, null).self_link, null)
+    # subnetwork = each.value.subnetwork_name
 
   }
 
