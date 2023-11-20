@@ -17,10 +17,10 @@ resource "google_compute_subnetwork" "subnets" {
   ip_cidr_range = each.value.ip_cidr_range
   region        = each.value.region
   network       = module.network_vpc.network_name
-  depends_on = [
-    google_compute_instance.instances["instance-01"],
-    google_compute_instance.instances["instance-02"],
-  ]
+#   depends_on = [
+#     google_compute_instance.instances["instance-01"],
+#     google_compute_instance.instances["instance-02"],
+#   ]
 }
 
 
@@ -36,6 +36,7 @@ resource "google_compute_instance" "instances" {
     network = module.network_vpc.network_self_link
     subnetwork = try(lookup(google_compute_subnetwork.subnets, each.value.subnetwork_name, null).self_link, null)
     # subnetwork = each.value.subnetwork_name
+    
 
   }
 
