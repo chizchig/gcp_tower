@@ -3,7 +3,7 @@ module "network_vpc" {
   version = "8.0.0"
 
   project_id                                = var.google_cloud_project_id
-  network_name                              = "mgcpnetwork"
+  network_name                              = "alphanetwork"
   shared_vpc_host                           = false
   network_firewall_policy_enforcement_order = "BEFORE_CLASSIC_FIREWALL"
 
