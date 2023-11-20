@@ -9,7 +9,7 @@ terraform {
 
 provider "google" {
   credentials = file("my-key.json")
-  project     = "your-google-project-id"
-  region      = "your-preferred-region"
+  project     = var.google_cloud_project_id
+  region      = "us-cental1"
 }
 
