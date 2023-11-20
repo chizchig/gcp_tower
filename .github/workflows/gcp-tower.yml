@@ -45,6 +45,3 @@ jobs:
       - name: Apply Terraform changes
         run: terraform apply -auto-approve tfplan
 
-      - name: Destroy Terraform configuration (if deploy was successful)
-        if: ${{ success() }}
-        run: terraform destroy -auto-approve
